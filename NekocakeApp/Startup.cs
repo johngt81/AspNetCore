@@ -28,7 +28,7 @@ namespace NekocakeApp
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<ICategoryRepository,CategoryRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IPieRepository, PieRepository>();
             services.AddDbContext<AppDBContext>(options => options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
             services.AddMvc();
@@ -38,8 +38,7 @@ namespace NekocakeApp
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
-
-            app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();

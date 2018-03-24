@@ -15,5 +15,6 @@ namespace NekocakeApp.Models
         }
 
         public IEnumerable<Category> Categories => _appDBContext.Categories;
+
     }
 }

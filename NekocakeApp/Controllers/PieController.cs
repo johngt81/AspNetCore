@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NekocakeApp.Models;
+using NekocakeApp.ViewModels;
 
 namespace NekocakeApp.Controllers
 {
@@ -19,7 +20,12 @@ namespace NekocakeApp.Controllers
 
         public IActionResult List()
         {
-            return View(_pieRepository.Pies);
+            var viewModel = new PieListViewModel()
+            {
+                Title = "Welcome to the Pie Shop",
+                Pies = _pieRepository.Pies
+            };
+            return View(viewModel);
         }
     }
 }

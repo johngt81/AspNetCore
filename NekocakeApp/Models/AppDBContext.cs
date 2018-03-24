@@ -16,5 +16,15 @@ namespace NekocakeApp.Models
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Pie> Pies { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Pie>()
+                .ToTable("Pie", schema: "dbo");
+
+            modelBuilder.Entity<Pie>()
+                .Property(b => b.PieId)
+                .HasColumnName("Id");
+        }
     }
 }

@@ -1,11 +1,11 @@
-﻿using System;
+﻿using NekocakeApp.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace NekocakeApp.ViewModels
 {
     public class PieListViewModel
     {
+        public string Title { get; set; }
+        public IEnumerable<Pie> Pies { get; set; }
     }
 }
