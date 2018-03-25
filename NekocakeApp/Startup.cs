@@ -30,6 +30,7 @@ namespace NekocakeApp
         {
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IPieRepository, PieRepository>();
+            services.AddTransient<IFeedBackRepository, FeedbackRepository>();
             services.AddDbContext<AppDBContext>(options => options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
             services.AddMvc();
         }
@@ -41,7 +42,13 @@ namespace NekocakeApp
                 app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
-            app.UseMvcWithDefaultRoute();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Pie}/{action=List}/{id?}");
+            }
+            );
         }
     }
 }
