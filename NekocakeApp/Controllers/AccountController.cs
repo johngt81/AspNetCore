@@ -35,12 +35,44 @@ namespace NekocakeApp.Controllers
             var user = await _userManager.FindByNameAsync(loginViewModel.UserName);
             if (user != null)
             {
-               var result =  await _signInManager.CheckPasswordSignInAsync(user, loginViewModel.Password, false);
+                var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
                 if (result.Succeeded)
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("List", "Pie");
             }
-            ModelState.AddModelError("","User not found");
+            ModelState.AddModelError("", "User not found");
             return View(loginViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(LoginViewModel loginViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new IdentityUser
+                {
+                    UserName = loginViewModel.UserName
+                };
+
+                var result = await _userManager.CreateAsync(user, loginViewModel.Password);
+                if (result.Succeeded)
+                {
+                   return RedirectToAction("List", "Pie");
+                }
+                ModelState.AddModelError("", result.Errors.First().Description);
+            }
+            return View(loginViewModel);
+        }
+
+        public IActionResult Register()
+        {
+            return View(new LoginViewModel());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("List", "Pie");
         }
     }
 }
